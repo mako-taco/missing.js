@@ -70,9 +70,8 @@ Object.defineProperty(Object.prototype, 'merge', {
 });
 
 Object.defineProperty(Object.prototype, 'stringify', {
-	value: function (clean) {
-		var args = Array.prototype.splice.call(arguments, 0);
-		return JSON.stringify.apply(JSON, args);
+	value: function (replacer, space) {
+		return JSON.stringify(this, replacer, space);
 	}
 });
 
@@ -88,9 +87,27 @@ Object.defineProperty(Array.prototype, 'remove', {
 	value: function (obj) {
 		var i = this.indexOf(obj);
 		if(~i) {
-			this = this.splice(i,1);
+			return this.splice(i,1)[0];
 		}
-		return this;
+		else {
+			return false;
+		}
+	}
+});
+
+Object.defineProperty(Array.prototype, 'removeAll', {
+	value: function (obj) {
+		var removed = [];
+		while(true) {
+			var i = this.indexOf(obj);
+			if(~i) {
+				removed[removed.length] = this.splice(i,1);
+			}
+			else {
+				break;
+			}
+		}
+		return removed;
 	}
 });
 
@@ -109,15 +126,15 @@ Object.defineProperty(Array.prototype, 'toString', {
 
 /* String prototype */
 Object.defineProperty(String.prototype, 'parse', {
-	value: function () {
-		return JSON.parse(this);
+	value: function (reviver) {
+		return JSON.parse(this, reviver);
 	}
 });
 
-/* 'to' Conversions */
+/* 'as' Conversions */
 (function () {
-	var to = {};
-	Object.defineProperties(to, {
+	var as = {};
+	Object.defineProperties(as, {
 		"string": {
 			get: function () {
 				var val = this.__value__, undefined;
@@ -125,7 +142,24 @@ Object.defineProperty(String.prototype, 'parse', {
 					return val.toString();
 				}
 				else if(val instanceof Object) {
-					return JSON.stringify(val, null, )
+					var visited = [];
+					return JSON.stringify(val, function (key, value) {
+						if(value instanceof Function) {
+							return "[Function]";
+						}
+						else if(value instanceof Object) {
+							if(visited.contains(value)) {
+								return "[Circular reference]";
+							}
+							else {
+								visited[visited.length] = value;
+								return value;
+							}
+						}
+						else {
+							return value;
+						}
+					}, "\t")
 				}
 				else if(val.toString !== undefined) {
 					return val.toString();
@@ -147,10 +181,10 @@ Object.defineProperty(String.prototype, 'parse', {
 		}
 	});
 
-	Object.defineProperty(Object.prototype, 'to', {
+	Object.defineProperty(Object.prototype, 'as', {
 		get: function () {
-			to.__value__ = this;
-			return to;
+			as.__value__ = this;
+			return as;
 		}
 	})
 }())
