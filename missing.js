@@ -130,10 +130,10 @@ Object.defineProperty(String.prototype, 'parse', {
 	}
 });
 
-/* 'as' Conversions */
+/* 'to' Conversions */
 (function () {
-	var as = {};
-	Object.defineProperties(as, {
+	var to = {};
+	Object.defineProperties(to, {
 		"string": {
 			get: function () {
 				var val = this.__value__, undefined;
@@ -180,15 +180,15 @@ Object.defineProperty(String.prototype, 'parse', {
 		},
 		"number": {
 			get: function () {
-				return this.__value__.as.num;
+				return this.__value__.to.num;
 			}
 		}
 	});
 
-	Object.defineProperty(Object.prototype, 'as', {
+	Object.defineProperty(Object.prototype, 'to', {
 		get: function () {
-			as.__value__ = this;
-			return as;
+			to.__value__ = this;
+			return to;
 		}
 	})
 })();
@@ -249,6 +249,11 @@ Object.defineProperty(String.prototype, 'parse', {
 		"null": {
 			get: function () {
 				return this.__value__ === null;
+			}
+		},
+		"ok": {
+			get: function () {
+				return !!this.__value__;
 			}
 		},
 		/* Aliases */

@@ -84,24 +84,24 @@ describe("stringify", function () {
 	it("should accept a space argument");
 });
 
-describe("as", function () {
+describe("to", function () {
 	it("should exist on Object prototype", function () {
-		Object.prototype.should.have.property("as");
+		Object.prototype.should.have.property("to");
 	})
 
 	it("should convert strings to numbers", function () {
 		var a = "23123.23";
-		a.as.number.should.equal(23123.23);
+		a.to.number.should.equal(23123.23);
 	})
 
 	it("should convert strings to ints", function () {
 		var a = "23123.23";
-		a.as.int.should.equal(23123);
+		a.to.int.should.equal(23123);
 	})
 
 	it("should alias number as num", function () {
 		var a = "23.3";
-		a.as.num.should.eql(a.as.number);
+		a.to.num.should.eql(a.to.number);
 	})
 })
 
