@@ -2,6 +2,37 @@
 =========
 Provides common prototypes with 'missing' functionality, such as the abilty to clone and merge objects, 
 evaluate the type of an object, and the ability to convert an object of one type to another type.
+
+- [Introduction](#introduction)
+- [Object](#objectprototype)
+ 	- [clone](#objectclone)
+ 	- [merge](#objectmerge)
+ 	- [stringify](#objectstringify)
+- [Array](#arrayprototype)
+	- [remove](#arrayremove)
+	- [removeAll](#arrayremoveall)
+	- [contains](#arraycontains)
+	- [toString](#arraytostring)
+- [String](#stringprototype)
+ 	- [parse](#stringparse)
+- [Type evaluation with `is`](#type-evaluation-with-is)
+	- [int](#is-evaluation)
+	- [number, num](#is-evaluation)
+	- [array](#is-evaluation)
+	- [string](#is-evaluation)
+	- [object](#is-evaluation)
+	- [numeric](#is-evaluation)
+	- [NaN](#is-evaluation)
+	- [function](#is-evaluation)
+	- [undefined](#is-evaluation)
+	- [null](#is-evaluation)
+	- [ok](#is-evaluation)
+- [Type conversion with `to`](#type-conversion-with-to)
+ 	- [int](#toint)
+ 	- [number, num](#tonumber)
+ 	- [string](#tostring)
+
+####Introduction
 ```js
 /*Without missing.js*/
 function (a, b, c) {
@@ -45,13 +76,13 @@ require('missing');
 ```
 
 ##Object.prototype
-####Object.clone()
+####clone()
 Creates a deep copy of the object
 ```js
 var original = {arr: [0,2,3], b:{}, c: "hello"};
 var copy = original.clone();
 ```
-####Object.merge(obj)
+####merge(obj)
 Assimilates `obj` into this, deep copying any complex values of `obj` before merging them in.
 Modifies the original object, and returns the original object after the merger.
 ```js
@@ -63,60 +94,60 @@ result === original; //true
 original; // {a: "existing key", b: 2, c: 3, d: "new key"}
 ```
 
-####Object.stringify([replacer, space])
+####stringify([replacer, space])
 Essentially the same as calling `JSON.stringfy(this, [replacer, space])`
 ```js
 ({a: 5}).stringify(); // "{'a': 5}"
 ```
 
 ##Array.prototype
-####Array.toString()
+####toString()
 ```js
 ['a', 2, 'b'].toString(); // "['a', 2, 'b']"
 //you will get a similar result if concatenating to a string
 var str = "Hello" + ['there', 'world']; // "Hello ['there', 'world']"
 ```
-####Array.remove(obj)
+####remove(obj)
 Removes the first instance of `obj` from the array, and returns it. If nothing was found, returns false.
-####Array.removeAll(obj)
+####removeAll(obj)
 Removes all instances of `obj` from the array, and returns them as an array. If nothing was found, returns an empty array.
-####Array.contains(obj)
+####contains(obj)
 Returns true if the object passed is inside of the array
 
 ##String.prototype 
-####String.parse([reviver])
+####parse([reviver])
 Essentially the same as `JSON.parse(this, [reviver])`
 
-##`as` Conversion
-Included in `missing.js` is a small object which attaches itself to `Object.prototype` called `as`.
+##`to` Conversion
+Included in `missing.js` is a small object which attaches itself to `Object.prototype` called `to`.
 This object allows you to easily retrieve the value of a variable as another type. This will leave the original
-object intact.
-####as.string
-The object as a useful string
+object intact. Think of `to` as a more fully fledged `toString()` or `toFixed()`, without the method call.
+####to.string
+Converts the object to a useful string
 ```js
 var array = [1,2,3];
-console.log(array.as.string); // "[1, 2, 3]"
+console.log(array.to.string); // "[1, 2, 3]"
 
 var number = 52.332
-console.log(number.as.string); // "52.332"
+console.log(number.to.string); // "52.332"
 
 var object = {a: 5, b: {c: 0}};
-console.log(object.as.string); //Pretty print + stringified
+console.log(object.to.string); //Pretty print + stringified
 ```
-####as.int
-The object as an int, or NaN if it cannot be parsed
+####to.int
+Converts the object to an int, or NaN if it cannot be parsed
 ```js
 var string = "1235";
-string.as.int; // 1235
+string.to.int; // 1235
 
 var num = 123.4442;
-num.as.int; // 123
+num.to.int; // 123
 ```
-####as.num
-The object as a number, possibly with decimals
+####to.num
+Converts the object to a number, possibly with decimals
 
 ##`is` Evaluation
-Similar to `as`, you may use `is` to determine if one object 'is' a certain type.
+Similar to `to`, you may use `is` to determine if one object 'is' a certain type.
 Available properties are listed below.
 ```js
 var something = "50.2";
