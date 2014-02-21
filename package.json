@@ -1,0 +1,29 @@
+{
+  "name": "missing.js",
+  "version": "0.0.0",
+  "description": "The missing prototype utility functions for JavaScript",
+  "main": "missing.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/test -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mako-taco/missing.js.git"
+  },
+  "keywords": [
+    "prototype",
+    "missing"
+  ],
+  "author": "mako-taco",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/mako-taco/missing.js/issues"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1",
+    "should": "~3.1.2"
+  }
+}

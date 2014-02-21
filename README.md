@@ -40,14 +40,6 @@ Removes all instances of `obj` from the array, and returns them as an array. If 
 ###contains(obj)
 Returns true if the object passed is inside of the array
 
-##HTMLElement.prototype
-###toString()
-Prints out the element's outerHTML
-```js
-var div = document.createElement('div');
-div.toString(); // "<div></div>"
-```
-
 ##String.prototype 
 ###parse([reviver])
 Essentially the same as JSON.parse(this, [reviver])
@@ -79,3 +71,20 @@ num.to.int; // 123
 ```
 ###as.num
 The object as a number, possibly with decimals
+
+##`is` Evaluation
+Similar to `as`, you may use `is` to determine if one object 'is' a certain type.
+Available properties are listed below.
+```js
+var something = "50.2";
+something.is.int //false		
+something.is.number //false
+something.is.string //true
+something.is.function //false
+something.is.object //false
+something.is.numeric //true
+something.is.NaN //false
+something.is.undefined //false
+something.is.null //false
+something.is.num //false
+```

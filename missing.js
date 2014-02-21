@@ -1,3 +1,9 @@
+"use strict";
+
+if(typeof module != "undefined" && typeof module.exports != "undefined") {
+	module.exports = {};
+}
+
 /* Object prototype */
 Object.defineProperty(Object.prototype, 'clone', {
 	value: function () {
@@ -8,7 +14,7 @@ Object.defineProperty(Object.prototype, 'clone', {
 			var result = {};
 		}
 		
-		for(key in this) {
+		for(var key in this) {
 			var val = this[key];
 
 			//copy array
@@ -72,13 +78,6 @@ Object.defineProperty(Object.prototype, 'merge', {
 Object.defineProperty(Object.prototype, 'stringify', {
 	value: function (replacer, space) {
 		return JSON.stringify(this, replacer, space);
-	}
-});
-
-/* HTMLElement prototype */
-Object.defineProperty(HTMLElement.prototype, 'toString', {
-	value: function () {
-		return this.outerHTML;
 	}
 });
 
@@ -148,7 +147,7 @@ Object.defineProperty(String.prototype, 'parse', {
 							return "[Function]";
 						}
 						else if(value instanceof Object) {
-							if(visited.contains(value)) {
+							if(~visited.indexOf(value)) {
 								return "[Circular reference]";
 							}
 							else {
@@ -178,6 +177,11 @@ Object.defineProperty(String.prototype, 'parse', {
 			get: function () {
 				return parseFloat(this.__value__);
 			}
+		},
+		"number": {
+			get: function () {
+				return this.__value__.as.num;
+			}
 		}
 	});
 
@@ -187,4 +191,84 @@ Object.defineProperty(String.prototype, 'parse', {
 			return as;
 		}
 	})
-}())
+})();
+
+/* 'is' Evaluations */
+(function () {
+	var is = {};
+
+	Object.defineProperties(is,  {
+		"int": {
+			get: function () {
+				var val = this.__value__;
+				return val.constructor === Number && (~~val === val);
+			}
+		},
+		"number": {
+			get: function () {
+				var val = this.__value__;
+				return val.constructor === Number;
+			}
+		},
+		"array": {
+			get: function () {
+				return this.__value__.constructor === Array;
+			}
+		},
+		"string": {
+			get: function () {
+				return this.__value__.constructor === String;
+			}
+		},
+		"object": {
+			get: function () {
+				return this.__value__.constructor === Object;
+			}
+		},
+		"numeric": {
+			get: function () {
+				return parseFloat(this.__value__) !== NaN;
+			}
+		},
+		"NaN": {
+			get: function () {
+				return isNaN(this.__value__);
+			}
+		},
+		"function": {
+			get: function () {
+				return this.__value__.constructor === Function;
+			}
+		},
+		"undefined": {
+			get: function () {
+				var undefined;
+				return this.__value__ === undefined;
+			}
+		},
+		"null": {
+			get: function () {
+				return this.__value__ === null;
+			}
+		},
+		/* Aliases */
+		"num": {
+			get: function () {
+				return this.number;
+			}
+		}
+	});
+
+	Object.defineProperty(Object.prototype, 'is', {
+		get: function (arg) {
+			var undefined;
+			is.__value__ = this;
+			if(arg === undefined) {
+				return is;
+			}
+			else {
+				return this instanceof arg;
+			}
+		}
+	})
+})();
