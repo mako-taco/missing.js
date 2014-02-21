@@ -1,5 +1,38 @@
 #missing.js#
-Provides common prototypes with 'missing' functionality.
+Provides common prototypes with 'missing' functionality, such as the abilty to clone and merge objects, 
+evaluate the type of an object, and the ability to convert an object of one type to another type.
+*Without missing.js*
+```js
+function (a, b, c) {
+	if(parseInt(a) !== a && !isNaN(a)) {
+		throw new Error("`a` must be an integer");
+	}
+	else if(b.constructor !== String) {
+		throw new Error("`b` must be a string");
+	}
+	else if(c !== null && (typeof c == 'object')) {
+		throw new Error("`c` must be an object");
+	}
+
+	return $.extend(c, {a: a, b: b});
+}
+```
+*With missing.js*
+```js
+function (a, b, c) {
+	if(!a.is.int) {
+		throw new Error("`a` must be an integer");
+	}
+	else if(!b.is.string) {
+		throw new Error("`b` must be a string");
+	}
+	else if(!c.is.object) {
+		throw new Error("`c` must be an object");
+	}
+
+	return c.merge({a: a, b: b});
+}
+```
 ###Getting started
 ####Browser
 <script src="missing.js"></script>
