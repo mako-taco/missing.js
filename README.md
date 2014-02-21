@@ -1,7 +1,9 @@
 ![missing.js](https://s3.amazonaws.com/missing.js/missing.png "missing.js") missing.js
 =========
 Provides common prototypes with 'missing' functionality, such as the abilty to clone and merge objects, 
-evaluate the type of an object, and the ability to convert an object of one type to another type.
+evaluate the type of an object, and the ability to convert an object of one type to another type. The properties,
+once defined on the various prototypes, **cannot be redefined**, which makes this perfectly safe to use, so long 
+as you dont include a library with similar ideas along side of `missing.js`.
 
 - [Introduction](#introduction)
 - [Object](#objectprototype)
