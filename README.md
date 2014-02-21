@@ -21,7 +21,7 @@ original; // {a: "existing key", b: 2, c: 3, d: "new key"}
 ```
 
 ###stringify([replacer, space])
-Essentially the same as calling JSON.stringfy(this, [replacer, space])
+Essentially the same as calling `JSON.stringfy(this, [replacer, space])`
 ```js
 ({a: 5}).stringify(); // "{'a': 5}"
 ```
@@ -42,7 +42,7 @@ Returns true if the object passed is inside of the array
 
 ##String.prototype 
 ###parse([reviver])
-Essentially the same as JSON.parse(this, [reviver])
+Essentially the same as `JSON.parse(this, [reviver])`
 
 ##`as` Conversion
 Included in `missing.js` is a small object which attaches itself to `Object.prototype` called `as`.
