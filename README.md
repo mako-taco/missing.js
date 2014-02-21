@@ -1,4 +1,5 @@
-#missing.js#
+![missing.js](https://s3.amazonaws.com/missing.js/missing.png "missing.js") missing.js
+=========
 Provides common prototypes with 'missing' functionality, such as the abilty to clone and merge objects, 
 evaluate the type of an object, and the ability to convert an object of one type to another type.
 ```js
