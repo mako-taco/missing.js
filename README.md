@@ -1,5 +1,12 @@
 #missing.js#
-Provides common prototypes with 'missing' functionality
+Provides common prototypes with 'missing' functionality.
+###Getting started
+####Browser
+<script src="missing.js"></script>
+####Node
+```js
+npm install missing
+```
 
 ##Object.prototype
 ###clone()
