@@ -6,7 +6,7 @@ once defined on the various prototypes, **cannot be redefined**, which makes thi
 as you dont include a library with similar ideas along side of `missing.js`.
 
 - [Introduction](#introduction)
-- [Object](#objectprototype)
+- [Object](#object)
  	- [clone](#objectclone)
  	- [merge](#objectmerge)
  	- [stringify](#objectstringify)
@@ -77,25 +77,26 @@ npm install missing
 require('missing');
 ```
 
-##Object.prototype
+##Object
 ####Object.clone()
 Creates a deep copy of the object
 ```js
 var original = {arr: [0,2,3], b:{}, c: "hello"};
-var copy = original.clone();
+var copy = Object.clone(original);
 ```
-####Object.merge(obj)
-Assimilates `obj` into this, deep copying any complex values of `obj` before merging them in.
+####Object.merge(target, obj)
+Assimilates `obj` into target, deep copying any complex values of `obj` before merging them in.
 Modifies the original object, and returns the original object after the merger.
 ```js
 var original = {a: 1, b: 2, c: 3};
 var other = {a: "existing key", d: "new key"};
 
-var result = original.merge(other);
+var result = Object.merge(original, other);
 result === original; //true
 original; // {a: "existing key", b: 2, c: 3, d: "new key"}
 ```
 
+##Object.prototype
 ####Object.stringify([replacer, space])
 Essentially the same as calling `JSON.stringfy(this, [replacer, space])`
 ```js

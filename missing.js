@@ -4,8 +4,8 @@ if(typeof module != "undefined" && typeof module.exports != "undefined") {
 	module.exports = {};
 }
 
-/* Object prototype */
-Object.defineProperty(Object.prototype, 'clone', {
+/* Object */
+Object.defineProperty(Object, 'clone', {
 	value: function () {
 		if(Array.isArray(this)) {
 			result = []
@@ -19,7 +19,7 @@ Object.defineProperty(Object.prototype, 'clone', {
 
 			//copy array
 			if(Array.isArray(val)) {
-				result[key] = val.slice().clone();
+				result[key] = Object.clone(val.slice());
 			}
 			//prevent weird typeof null == object
 			else if(val === null) {
@@ -31,7 +31,7 @@ Object.defineProperty(Object.prototype, 'clone', {
 			}
 			//clone object
 			else if(typeof val === "object") {
-				result[key] = val.clone();
+				result[key] = Object.clone(val);
 			}
 			//copy primitive
 			else {
@@ -42,39 +42,40 @@ Object.defineProperty(Object.prototype, 'clone', {
 	}
 });
 
-Object.defineProperty(Object.prototype, 'merge', {
-	value: function (obj) {
+Object.defineProperty(Object, 'merge', {
+	value: function (target, obj) {
 		for(key in obj) {
 			var next = obj[key];
-			var current = this[key];
+			var current = target[key];
 			if(Array.isArray(next)) {
-				this[key] = next.slice().clone();
+				target[key] = Object.clone(next.slice());
 			}
 			else if(next === null) {
-				this[key] = next;
+				target[key] = next;
 			}
 			else if(next === undefined) {
 				continue;
 			}
 			else if(typeof next === 'object') {
 				if(current === null) {
-					current = next.clone();
+					current = Object.clone(next);
 				}
 				else if(typeof current === 'object') {
 					current.absorb(next);
 				}
 				else if(current === undefined) {
-					current = next.clone();
+					current = Object.clone(next);
 				}
 			}
 			else {
-				this[key] = next;
+				target[key] = next;
 			}	
 		}
-		return this;
+		return target;
 	}
 });
 
+/* Object prototype */
 Object.defineProperty(Object.prototype, 'stringify', {
 	value: function (replacer, space) {
 		return JSON.stringify(this, replacer, space);
