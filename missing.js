@@ -6,16 +6,16 @@ if(typeof module != "undefined" && typeof module.exports != "undefined") {
 
 /* Object */
 Object.defineProperty(Object, 'clone', {
-	value: function () {
-		if(Array.isArray(this)) {
+	value: function (obj) {
+		if(Array.isArray(obj)) {
 			result = []
 		}
 		else {
 			var result = {};
 		}
 		
-		for(var key in this) {
-			var val = this[key];
+		for(var key in obj) {
+			var val = obj[key];
 
 			//copy array
 			if(Array.isArray(val)) {
@@ -44,7 +44,7 @@ Object.defineProperty(Object, 'clone', {
 
 Object.defineProperty(Object, 'merge', {
 	value: function (target, obj) {
-		for(key in obj) {
+		for(var key in obj) {
 			var next = obj[key];
 			var current = target[key];
 			if(Array.isArray(next)) {

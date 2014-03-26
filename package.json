@@ -1,6 +1,6 @@
 {
   "name": "missing.js",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The missing prototype utility functions for JavaScript",
   "main": "missing.js",
   "directories": {
